@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+struct objetos {
+  double beneficio;
+  double peso;
+  
+  objetos(double b, double p) {beneficio = b; peso = p;}
+  
+  double valor () {
+    return beneficio/peso;
+  }
+  
+};
+
+bool comparar(objetos x, objetos y) {
+  return x.valor() > y.valor();
+}
+
+double mochilita (double capacidad, std::vector<objetos> &objeto) {
+  sort(objeto.begin(), objeto.end(), comparar);
+  double valor1 = 0.0;
+  for (int i = 0; i < objeto.size(); i++){
+    if (capacidad - objeto[i].peso >= 0){
+      capacidad -= objeto[i].peso;
+      valor1 += objeto[i].beneficio;
+    } else {
+      valor1 += objeto[i].valor() * capacidad;
+      break;
+    }
+  }
+  return valor1;
+}
+
+int main(){
+  vector<objetos> objeto = {objetos(60, 10), objetos(100, 20), objetos(120, 30)};
+  double capacidad = 50.0;
+    
+  cout << "Valor máximo en la mochila: " << mochilita(capacidad, objeto) << endl;
+  return 0;
+}
