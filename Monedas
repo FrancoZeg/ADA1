@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+bool monedas(double x, vector<double>& Umonedas) {
+    vector<double> monedas = {50, 20, 10, 5, 2, 1};
+    double y = x*10;
+    int i = 0;
+
+    while (y > 0 && i < monedas.size()) {
+        if (monedas[i] <= y) {
+            y -= monedas[i];
+            Umonedas.push_back(monedas[i]);
+        } else {
+            i++;
+        }
+    }
+
+    return y == 0;
+}
+
+int main() {
+    double plata = 223.1;
+    vector<double> monedas_usadas;
+
+    if (monedas(plata, monedas_usadas)) {
+        cout << "Denominations used: ";
+        for (int i = 0; i < monedas_usadas.size(); i++) {
+            monedas_usadas[i] /= 10;
+        }
+        cout << endl;
+        for (int i = 0; i < monedas_usadas.size(); i++) {
+            cout << monedas_usadas[i] << " ";
+        }
+        cout << endl;
+    } else {
+        cout << "Could not form the exact amount." << endl;
+    }
+
+    return 0;
+}
